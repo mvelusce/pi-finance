@@ -1,6 +1,6 @@
 services:
   api:
-    image: ghcr.io/${GITHUB_USER:-yourusername}/pi-finance:latest
+    image: ghcr.io/mvelusce/pi-finance:latest
     container_name: pi-finance-api
     ports:
       - "${API_PORT:-8080}:8000"  # External port configurable via .env, internal always 8000

@@ -84,10 +84,10 @@ The easiest way to deploy on your Raspberry Pi:
    cd ~/pi-finance
    
    # Download docker-compose.yml
-   wget -O docker-compose.yml https://raw.githubusercontent.com/YOUR_USERNAME/pi-finance/master/docker-compose.yml
+   wget -O docker-compose.yml https://raw.githubusercontent.com/mvelusce/pi-finance/master/docker-compose.yml
    
    # Download .env.example
-   wget -O .env.example https://raw.githubusercontent.com/YOUR_USERNAME/pi-finance/master/.env.example
+   wget -O .env.example https://raw.githubusercontent.com/mvelusce/pi-finance/master/.env.example
    ```
 
 3. **Create and configure your .env file**
