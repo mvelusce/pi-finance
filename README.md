@@ -87,12 +87,11 @@ The easiest way to deploy on your Raspberry Pi:
    wget -O docker-compose.yml https://raw.githubusercontent.com/mvelusce/pi-finance/master/docker-compose.yml
    
    # Download .env.example
-   wget -O .env.example https://raw.githubusercontent.com/mvelusce/pi-finance/master/.env.example
+   wget -O .env https://raw.githubusercontent.com/mvelusce/pi-finance/master/.env.example
    ```
 
 3. **Create and configure your .env file**
    ```bash
-   cp .env.example .env
    nano .env
    ```
    
@@ -107,9 +106,6 @@ The easiest way to deploy on your Raspberry Pi:
    
    # Restrict CORS for better security (optional)
    CORS_ORIGINS=*
-   
-   # Your GitHub username (for pulling the Docker image)
-   GITHUB_USER=your-github-username
    ```
 
 4. **Start the service**
@@ -161,7 +157,7 @@ Since you have a reverse proxy on your Synology NAS:
    - **Destination:**
      - Protocol: HTTP
      - Hostname: <raspberry-pi-ip>
-     - Port: 8000
+     - Port: 8080
 
 3. **Save and test** by visiting https://finance.yourdomain.com/health
 
