@@ -137,7 +137,7 @@
          ▼
 ┌─────────────────────────────────────────┐
 │   GitHub Container Registry (ghcr.io)   │
-│   ghcr.io/username/pi-finance:main      │
+│   ghcr.io/username/pi-finance:master      │
 └────────┬────────────────────────────────┘
          │ docker pull
          ▼

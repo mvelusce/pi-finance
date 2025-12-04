@@ -1,6 +1,6 @@
 #!/bin/bash
 # Quick setup script for Pi Finance API on Raspberry Pi
-# Usage: curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/pi-finance/main/install.sh | bash
+# Usage: curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/pi-finance/master/install.sh | bash
 
 set -e
 
@@ -36,13 +36,13 @@ echo ""
 echo "📥 Downloading configuration files..."
 
 # Download docker-compose.yml
-if ! curl -fsSL -o docker-compose.yml https://raw.githubusercontent.com/YOUR_USERNAME/pi-finance/main/docker-compose.yml; then
+if ! curl -fsSL -o docker-compose.yml https://raw.githubusercontent.com/YOUR_USERNAME/pi-finance/master/docker-compose.yml; then
     echo "❌ Failed to download docker-compose.yml"
     exit 1
 fi
 
 # Download .env.example
-if ! curl -fsSL -o .env.example https://raw.githubusercontent.com/YOUR_USERNAME/pi-finance/main/.env.example; then
+if ! curl -fsSL -o .env.example https://raw.githubusercontent.com/YOUR_USERNAME/pi-finance/master/.env.example; then
     echo "❌ Failed to download .env.example"
     exit 1
 fi

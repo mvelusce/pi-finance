@@ -184,7 +184,7 @@ echo "YOUR_GITHUB_TOKEN" | docker login ghcr.io -u your-username --password-stdi
 **2. Pull and run**
 
 ```bash
-docker pull ghcr.io/your-username/pi-finance:main
+docker pull ghcr.io/your-username/pi-finance:master
 
 docker run -d \
   --name pi-finance-api \
@@ -193,7 +193,7 @@ docker run -d \
   -e CORS_ORIGINS="*" \
   -e DEBUG="false" \
   --restart unless-stopped \
-  ghcr.io/your-username/pi-finance:main
+  ghcr.io/your-username/pi-finance:master
 ```
 
 **3. Verify**
@@ -379,7 +379,7 @@ Then try:
 
 ```bash
 cd ~/pi-finance
-git pull origin main
+git pull origin master
 docker-compose down
 docker-compose up -d --build
 ```
@@ -387,7 +387,7 @@ docker-compose up -d --build
 **Method 2: Using Pre-built Image**
 
 ```bash
-docker pull ghcr.io/your-username/pi-finance:main
+docker pull ghcr.io/your-username/pi-finance:master
 docker stop pi-finance-api
 docker rm pi-finance-api
 docker run -d \
@@ -395,7 +395,7 @@ docker run -d \
   -p 8000:8000 \
   --env-file .env \
   --restart unless-stopped \
-  ghcr.io/your-username/pi-finance:main
+  ghcr.io/your-username/pi-finance:master
 ```
 
 ### Viewing Logs

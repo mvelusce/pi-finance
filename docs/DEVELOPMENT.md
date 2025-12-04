@@ -354,7 +354,7 @@ lsof -i :8000
 kill -9 <PID>
 
 # Or use a different port
-uvicorn app.main:app --reload --port 8001
+uvicorn app.master:app --reload --port 8001
 ```
 
 **3. Module Not Found**
@@ -420,8 +420,8 @@ git commit -m "Description of changes"
 ### Pushing Changes
 
 ```bash
-# Push to main (triggers GitHub Actions)
-git push origin main
+# Push to master (triggers GitHub Actions)
+git push origin master
 
 # Or create a branch
 git checkout -b feature/new-feature
@@ -430,7 +430,7 @@ git push origin feature/new-feature
 
 ### GitHub Actions
 
-Pushing to `main` or creating a tag will trigger automatic Docker image build:
+Pushing to `master` or creating a tag will trigger automatic Docker image build:
 
 ```bash
 # Create and push a version tag
@@ -439,7 +439,7 @@ git push origin v1.0.1
 ```
 
 This builds and pushes:
-- `ghcr.io/your-username/pi-finance:main`
+- `ghcr.io/your-username/pi-finance:master`
 - `ghcr.io/your-username/pi-finance:v1.0.1`
 - `ghcr.io/your-username/pi-finance:1.0`
 - `ghcr.io/your-username/pi-finance:1`

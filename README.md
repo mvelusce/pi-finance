@@ -84,10 +84,10 @@ The easiest way to deploy on your Raspberry Pi:
    cd ~/pi-finance
    
    # Download docker-compose.yml
-   wget -O docker-compose.yml https://raw.githubusercontent.com/YOUR_USERNAME/pi-finance/main/docker-compose.yml
+   wget -O docker-compose.yml https://raw.githubusercontent.com/YOUR_USERNAME/pi-finance/master/docker-compose.yml
    
    # Download .env.example
-   wget -O .env.example https://raw.githubusercontent.com/YOUR_USERNAME/pi-finance/main/.env.example
+   wget -O .env.example https://raw.githubusercontent.com/YOUR_USERNAME/pi-finance/master/.env.example
    ```
 
 3. **Create and configure your .env file**
@@ -380,11 +380,11 @@ The repository includes GitHub Actions for automatic Docker image building.
    - Go to your repo → **Settings** → **Actions** → **General**
    - Under "Workflow permissions", select "Read and write permissions"
 
-2. **Push to main branch or create a tag**
+2. **Push to master branch or create a tag**
    ```bash
    git add .
    git commit -m "Initial commit"
-   git push origin main
+   git push origin master
    
    # Or create a version tag
    git tag v1.0.0
@@ -393,7 +393,7 @@ The repository includes GitHub Actions for automatic Docker image building.
 
 3. **Image will be available at:**
    ```
-   ghcr.io/<your-username>/pi-finance:main
+   ghcr.io/<your-username>/pi-finance:master
    ghcr.io/<your-username>/pi-finance:v1.0.0
    ```
 

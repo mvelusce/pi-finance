@@ -5,7 +5,7 @@
 For a completely automated setup on your Raspberry Pi:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/pi-finance/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/pi-finance/master/install.sh | bash
 ```
 
 This will:
@@ -29,10 +29,10 @@ docker-compose up -d
 mkdir -p ~/pi-finance && cd ~/pi-finance
 
 # Download docker-compose.yml
-wget -O docker-compose.yml https://raw.githubusercontent.com/YOUR_USERNAME/pi-finance/main/docker-compose.yml
+wget -O docker-compose.yml https://raw.githubusercontent.com/YOUR_USERNAME/pi-finance/master/docker-compose.yml
 
 # Download .env.example
-wget -O .env.example https://raw.githubusercontent.com/YOUR_USERNAME/pi-finance/main/.env.example
+wget -O .env.example https://raw.githubusercontent.com/YOUR_USERNAME/pi-finance/master/.env.example
 ```
 
 ### Step 2: Configure
@@ -117,7 +117,7 @@ The `docker-compose.yml` pulls the pre-built Docker image from:
 ghcr.io/YOUR_USERNAME/pi-finance:latest
 ```
 
-This image is automatically built by GitHub Actions whenever you push code to the `main` branch.
+This image is automatically built by GitHub Actions whenever you push code to the `master` branch.
 
 ## Synology Reverse Proxy
 
