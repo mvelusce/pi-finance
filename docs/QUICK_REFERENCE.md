@@ -14,8 +14,11 @@ pip install -r requirements.txt
 cp .env.example .env
 # Edit .env with your API key
 
-# Run
-uvicorn app.main:app --reload
+# Run (use python -m to avoid pyenv conflicts)
+python -m uvicorn app.main:app --reload
+
+# Or use the startup script
+./run_server.sh
 ```
 
 ### Docker

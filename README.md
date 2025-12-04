@@ -38,6 +38,9 @@ A simple and secure Yahoo Finance API wrapper designed for Google Sheets integra
    
    # Edit .env and replace 'your-secret-api-key-here' with your generated key
    nano .env
+   
+   # Optional: Change the port if 8080 is already in use
+   # API_PORT=9000
    ```
 
 4. **Install Python dependencies (for local development without Docker)**
@@ -52,42 +55,61 @@ A simple and secure Yahoo Finance API wrapper designed for Google Sheets integra
    # With Docker Compose
    docker-compose up --build
    
-   # Or directly with Python
-   uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+   # Or directly with Python (recommended)
+   python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+   
+   # Or use the startup script
+   ./run_server.sh
    ```
 
 6. **Access the API**
-   - API: http://localhost:8000
-   - Interactive docs: http://localhost:8000/docs
-   - Alternative docs: http://localhost:8000/redoc
+   - API: http://localhost:8080 (or your configured port)
+   - Interactive docs: http://localhost:8080/docs
+   - Alternative docs: http://localhost:8080/redoc
 
 ## Deployment on Raspberry Pi
 
-### Option 1: Using Docker Compose (Recommended)
+### Quick Setup (Recommended)
+
+The easiest way to deploy on your Raspberry Pi:
 
 1. **SSH into your Raspberry Pi**
    ```bash
    ssh pi@your-pi-address
    ```
 
-2. **Clone the repository**
+2. **Create a directory and download files**
    ```bash
-   cd ~
-   git clone <your-repo-url>
-   cd pi-finance
+   mkdir -p ~/pi-finance
+   cd ~/pi-finance
+   
+   # Download docker-compose.yml
+   wget -O docker-compose.yml https://raw.githubusercontent.com/YOUR_USERNAME/pi-finance/main/docker-compose.yml
+   
+   # Download .env.example
+   wget -O .env.example https://raw.githubusercontent.com/YOUR_USERNAME/pi-finance/main/.env.example
    ```
 
-3. **Create and configure `.env` file**
+3. **Create and configure your .env file**
    ```bash
    cp .env.example .env
    nano .env
    ```
    
-   Set your secure API key:
+   Set your configuration:
    ```env
+   # Generate a secure API key
+   # Run: openssl rand -hex 32
    API_KEYS=your-generated-secure-key-here
+   
+   # Change port if 8080 is already in use
+   API_PORT=8080
+   
+   # Restrict CORS for better security (optional)
    CORS_ORIGINS=*
-   DEBUG=false
+   
+   # Your GitHub username (for pulling the Docker image)
+   GITHUB_USER=your-github-username
    ```
 
 4. **Start the service**
@@ -100,22 +122,27 @@ A simple and secure Yahoo Finance API wrapper designed for Google Sheets integra
    docker-compose logs -f
    ```
 
-### Option 2: Using Pre-built Image from GitHub Container Registry
+That's it! Your API is now running on `http://raspberry-pi-ip:8080`
 
-1. **Pull the image**
+### Building from Source (Alternative)
+
+If you prefer to build the image locally:
+
+1. **Clone the repository**
    ```bash
-   docker pull ghcr.io/<your-username>/pi-finance:main
+   git clone https://github.com/YOUR_USERNAME/pi-finance.git
+   cd pi-finance
    ```
 
-2. **Run the container**
+2. **Create and configure .env file**
    ```bash
-   docker run -d \
-     --name pi-finance-api \
-     -p 8000:8000 \
-     -e API_KEYS=your-secure-api-key \
-     -e CORS_ORIGINS=* \
-     --restart unless-stopped \
-     ghcr.io/<your-username>/pi-finance:main
+   cp .env.example .env
+   nano .env
+   ```
+
+3. **Build and start with local Dockerfile**
+   ```bash
+   docker-compose -f docker-compose.dev.yml up -d --build
    ```
 
 ### Configure Reverse Proxy (Synology NAS)

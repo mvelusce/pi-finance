@@ -16,6 +16,9 @@ class Settings(BaseSettings):
     app_version: str = "1.0.0"
     debug: bool = False
     
+    # Server Settings
+    api_port: int = 8080  # Port for the API server
+    
     class Config:
         env_file = ".env"
         case_sensitive = False
