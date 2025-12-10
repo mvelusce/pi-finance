@@ -19,6 +19,11 @@ class Settings(BaseSettings):
     # Server Settings
     api_port: int = 8080  # Port for the API server
     
+    # Cache Settings
+    cache_enabled: bool = True  # Enable price caching
+    cache_ttl_days: int = 7  # Keep tickers in cache for 7 days after last request
+    cache_refresh_interval_minutes: int = 30  # Refresh cached prices every 30 minutes
+    
     class Config:
         env_file = ".env"
         case_sensitive = False

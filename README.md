@@ -10,6 +10,7 @@ A simple and secure Yahoo Finance API wrapper designed for Google Sheets integra
 - 🏗️ **Multi-arch support** - Works on Raspberry Pi (ARM) and x64 systems
 - 📊 **Rich data** - Stock quotes, historical data, company info, dividends, and more
 - 🔄 **Auto-deploy** - GitHub Actions automatically build and push Docker images
+- ⚡ **Smart Caching** - Automatic price caching with periodic refresh for blazing-fast Google Sheets performance
 
 ## Quick Start
 
@@ -41,6 +42,11 @@ A simple and secure Yahoo Finance API wrapper designed for Google Sheets integra
    
    # Optional: Change the port if 8080 is already in use
    # API_PORT=9000
+   
+   # Optional: Configure caching (enabled by default)
+   # CACHE_ENABLED=true
+   # CACHE_TTL_DAYS=7
+   # CACHE_REFRESH_INTERVAL_MINUTES=30
    ```
 
 4. **Install Python dependencies (for local development without Docker)**
@@ -106,6 +112,11 @@ The easiest way to deploy on your Raspberry Pi:
    
    # Restrict CORS for better security (optional)
    CORS_ORIGINS=*
+   
+   # Optional: Configure caching (recommended defaults)
+   CACHE_ENABLED=true
+   CACHE_TTL_DAYS=7
+   CACHE_REFRESH_INTERVAL_MINUTES=30
    ```
 
 4. **Start the service**
@@ -233,6 +244,89 @@ GET /dividends/{symbol}?period=1y
 ```http
 GET /health
 ```
+
+### Cache Management Endpoints
+
+The API includes intelligent caching to speed up Google Sheets loading times. Caching is enabled by default.
+
+#### 1. View Cache Statistics
+```http
+GET /cache/stats
+```
+
+Returns cache hit rate, number of cached symbols, and performance metrics.
+
+Example response:
+```json
+{
+  "enabled": true,
+  "cached_symbols": 15,
+  "total_requests": 250,
+  "cache_hits": 235,
+  "cache_misses": 15,
+  "hit_rate_percent": 94.0,
+  "total_refreshes": 45,
+  "refresh_errors": 0,
+  "ttl_days": 7,
+  "refresh_interval_minutes": 30,
+  "symbols": ["AAPL", "MSFT", "GOOGL", ...]
+}
+```
+
+#### 2. Get Symbol Cache Info
+```http
+GET /cache/symbols/{symbol}
+```
+
+Get detailed cache information for a specific symbol.
+
+#### 3. Trigger Manual Refresh
+```http
+POST /cache/refresh
+```
+
+Manually trigger a cache refresh (normally happens automatically every 30 minutes).
+
+#### 4. Clear All Cache
+```http
+DELETE /cache/clear
+```
+
+Clear all cached data to force fresh fetches.
+
+#### 5. Remove Specific Symbol
+```http
+DELETE /cache/symbols/{symbol}
+```
+
+Remove a specific symbol from cache.
+
+### How Caching Works
+
+The API uses an intelligent caching system designed for Google Sheets:
+
+1. **Dynamic Discovery**: No need to configure which stocks to cache - the API automatically caches symbols you request
+2. **Automatic Refresh**: Cached prices refresh every 30 minutes (configurable)
+3. **Long TTL**: Symbols stay cached for 7 days (configurable), even if you don't open your sheet for a day
+4. **Instant Response**: Cached symbols return nearly instantly, making your Google Sheets load much faster
+
+**Configuration Options** (in `.env`):
+
+```env
+# Enable/disable caching
+CACHE_ENABLED=true
+
+# How long to keep symbols in cache after last request (days)
+CACHE_TTL_DAYS=7
+
+# How often to refresh cached prices (minutes)
+CACHE_REFRESH_INTERVAL_MINUTES=30
+```
+
+**Benefits for Google Sheets**:
+- First request for a new symbol: ~2-5 seconds (fetches from Yahoo Finance)
+- Subsequent requests: ~50-100ms (returns from cache)
+- **Result**: Your Google Sheets will load dramatically faster after the first load!
 
 ## Using with Google Sheets
 
@@ -417,6 +511,18 @@ docker-compose config
 - Yahoo Finance API sometimes has delays
 - Try a different symbol to verify API is working
 - Check yfinance library issues: https://github.com/ranaroussi/yfinance
+- If using cache, you can force refresh: `curl -X POST -H "X-API-Key: your-key" https://finance.yourdomain.com/cache/refresh`
+
+### Google Sheets loading slowly
+- Check cache statistics: `curl -H "X-API-Key: your-key" https://finance.yourdomain.com/cache/stats`
+- Verify cache is enabled in your `.env` file (`CACHE_ENABLED=true`)
+- First load is always slower (fetches from Yahoo), subsequent loads should be much faster
+- Check API logs for cache hit/miss information: `docker-compose logs -f`
+
+### Cache not working
+- Verify cache is enabled: Check `/cache/stats` endpoint
+- Check container logs: `docker-compose logs -f api`
+- Restart the service to reinitialize cache: `docker-compose restart`
 
 ## Development
 
